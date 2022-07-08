@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Contacts</h1>
+    <div class="container overflow-hidden" id="dashboardDiv">
+        <div class="row gy-5">
+            <div class="col-6">
+                <div class="p-3 border bg-light">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <a asp-controller="Contact" asp-action="Index" style="text-decoration:none"><h4><img src="~/images/eye.gif" width="65" height="80" />Total Contacts</h4></a>
+                        </div>
+                        <div class="col-lg-5">
+                            <marquee><h3 class="text-info">@ViewBag.ContactCount</h3></marquee>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">
+                    <div class="row">
+                        <div class="col-lg-7"><h4><img src="~/images/man.gif" width="65" height="80" />Last Employee</h4></div>
+                        <div class="col-lg-5"><marquee><h3 class="text-info">@ViewBag.LastContact</h3></marquee></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">
+                    <div class="row">
+                        <div class="col-lg-7"><h4><img src="~/images/man.gif" width="65" height="80" />Favourite</h4></div>
+                        <div class="col-lg-5"><marquee><h3 class="text-info">@ViewBag.RandomContact</h3></marquee></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Recently View Contact</div>
+            </div>
+        </div>
+    </div>
+</div>
+

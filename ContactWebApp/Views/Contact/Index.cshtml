@@ -1,0 +1,146 @@
+﻿@model IEnumerable<ContactModel>
+
+
+<div class="row-cols-md-6">
+    <div class="nav">
+        <a data-target="modal" class="btn btn-info" data-ajax="true" data-ajax-complete="addContact()">Add New Contact</a>
+    </div>
+        <div class="alert alert-primary" id="deleteAlert" role="alert" style="display:none;">
+            Contact Deleted Successfully!
+        </div>
+</div>
+<hr />
+<div class="row">
+   
+
+    @foreach (var person in Model)
+    {
+        if (person == null)
+        {
+               <h1> Nothing to Display!</h1> 
+
+        }
+        <div class="col-md-2">
+            <div class="card mb-3 shadow-sm">
+                <img src="~/images/unknown.png" class="img-thumbnail" />
+                <div class="card-body">
+                    <h7 class="card-text">Name: <span class="text-black-50">@person.FirstName</span></h7>
+                    <p class="card-text">Phone: @person.PhoneNumber</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a data-ajax="true" data-ajax-complete="ViewDetail(@person.Id)" class="btn btn-sm btn-outline-info">View details</a>
+                        </div>
+                        <small class="text-muted"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    }
+</div>
+
+<!-- View Detail Modal-->
+<partial name="_ViewDetail" />
+<!---->
+<!-- Add New Contact Modal -->
+<partial name="_AddContact" />
+<!---->
+
+
+
+
+@section scripts{
+    <script>
+        var Id = '';
+        function ViewDetail(id) {
+            Id = id;
+            $.ajax({
+                url: "/Contact/GetContactById/" + id,
+                method: "GET",
+                success: (data) => {
+                    data = JSON.parse(data);
+                    $("#name").text(data.FirstName + " " + data.MiddleName + " " + data.LastName);
+                    $("#phone").text(data.PhoneNumber);
+                    $("#email").text(data.Email);
+                    $("#relation").text(data.Relation);
+                    $("#viewDetail").modal('show');
+                },
+                error(err) {
+                    console.error(err);
+                }
+            });
+            //$("#EditBtn").attr("href", "/Contact/EditContact/" + id)
+        }
+
+        function Edit() {
+            $("#viewDetail").modal('hide');
+            $.ajax({
+                url: "/Contact/EditContact/" + Id,
+                method: "GET",
+                success: (data) => {
+                    console.log(data);
+                    data = JSON.parse(data);
+                    console.log(data);
+                    $('#id').val(data.Id);
+                    $('#firstname').val(data.FirstName);
+                    $('#middlename').val(data.MiddleName);
+                    $('#lastname').val(data.LastName);
+                    $('#phoneE').val(data.PhoneNumber);
+                    $('#emailE').val(data.Email);
+                    $('#relationE').val(data.Relation);
+
+                    $('#addcontact').modal('show');
+
+                },
+                error(err) {
+                    console.error(err);
+                }
+            });
+
+        }
+
+        function Delete() {
+            $("#viewDetail").modal('hide');
+            $.ajax({
+                method: "GET",
+                url: "/Contact/DeleteContact/" + Id,
+                success: () => {
+                    debugger;
+                    $('#deleteAlert').show(50)
+                    setTimeout(function () { window.location ='/Contact/Index'; }, 1000);
+                }
+            })
+        }
+
+        function addContact() {
+            $('#addcontact').modal('show');
+        }
+
+        function SaveContact() {
+            var firstName = $("#firstname").val();
+            var lastName = $("#lastname").val();
+            var middleName = $("#middlename").val();
+            var inputData = {
+                FirstName: firstName,
+                LastName: lastName,
+                MiddleName: middleName
+            }
+
+            $.ajax({
+                url: "/Contact/AddNewContact",
+                method: "POST",
+                data: inputData,
+                success: (data) => {
+                }
+            })
+                .done(() => {
+                    $('#addcontact').modal('hide');
+                });
+
+
+        }
+
+
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿<div class="modal fade" id="viewDetail" tabindex="-1" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info" id="name"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul style="list-style-type: none;">
+                    <li><label>Relation: <span class="text-primary" id="relation"></span></label></li>
+                    <li><label>Phone: <span class="text-primary" id="phone"></span></label></li>
+                    <li><label>E-mail: <span class="text-primary" id="email"></span></label></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a id="deleteBtn" class="btn btn-danger" data-ajax="true" data-ajax-complete="Delete()">Delete</a>
+                <a id="EditBtn" class="btn btn-outline-info" data-ajax="true" data-ajax-complete="Edit()">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
