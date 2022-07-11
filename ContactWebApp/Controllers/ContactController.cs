@@ -63,6 +63,17 @@ namespace ContactWebApp.Controllers
             return Json(JsonContact);
         }
         
+        public IActionResult ContactList()
+        {
+            return View();
+        }
+
+        public object ContactLists()
+        {
+            var list = _iContactRepository.GetAllContact();
+            return Json(list);
+        }
+
         //[HttpGet("search")]
         //public async Task<IActionResult> SearchContact(string term)
         //{

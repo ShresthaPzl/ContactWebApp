@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Contact List";
+}
+
+<div class="container">
+    <h1>Contact List</h1>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <table class="table table-primary" id="tablePrimary">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <table class="table table-primary" id="tableSecondary">
+                <thead>
+                    <tr>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Relation</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+    </div>
+
+</div>
+
+@section scripts{ 
+    <script>
+        $(document).ready(() => {
+            $.ajax({
+                method: "GET",
+                dataType: "JSON",
+                url: "/Contact/ContactLists",
+                success: (response) => {
+                    console.log(response)
+                    $('#tablePrimary').DataTable({
+                        data: response,
+                        columns: [
+                            { 'data': 'firstName' },
+                            { 'data': 'middleName' },
+                            {'data' : 'lastName'}
+                        ]
+                    });
+                },
+                error: (response) => {
+
+                }
+            });
+
+            $.ajax({
+                method: "GET",
+                dataType: "JSON",
+                url: "/Contact/ContactLists",
+                success: (response) => {
+                    console.log(response)
+                    $('#tableSecondary').DataTable({
+                        data: response,
+                        columns: [
+                            { 'data': 'phoneNumber' },
+                            { 'data': 'email' },
+                            { 'data': 'relation' }
+                        ]
+                    });
+                },
+                error: (response) => {
+
+                }
+            });
+        });
+
+    </script>
+}
